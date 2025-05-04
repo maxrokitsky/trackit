@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia'
 import { computed, ref } from 'vue'
 import PocketBase from 'pocketbase'
+import { usePocketBase } from '@/lib/pocketbase'
 
 type LoginData = {
   username: string,
@@ -8,7 +9,7 @@ type LoginData = {
 }
 
 export const useAuthStore = defineStore('auth', () => {
-  const pb = new PocketBase('http://127.0.0.1:8090')
+  const pb = usePocketBase()
   const data = ref();
 
   async function login(loginData: LoginData) {
