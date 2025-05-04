@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import { Button } from '@/components/ui/button'
+import LoginForm from '@/components/LoginForm.vue'
 
 </script>
 
 <template>
-  <main>
-    <Button>Click me</Button>
-  </main>
+  <div class="flex mx-auto justify-center items-center min-h-screen px-2">
+    <LoginForm class="max-w-sm w-full"/>
+  </div>
 </template>
