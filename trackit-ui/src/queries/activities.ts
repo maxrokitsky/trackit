@@ -16,8 +16,9 @@ const useActivitiesQuery = (page: MaybeRef<number>) => {
 
   const getActivities = async () => {
     return await pb.collection('activities').getList<Activity>(pageRef.value, 50, {
-      sort: '-started_at'
-    }); // Adjust the page and limit as needed
+      sort: '-started_at',
+      filter: 'ended_at!=null',
+    });
   }
 
   return useQuery({
@@ -26,12 +27,36 @@ const useActivitiesQuery = (page: MaybeRef<number>) => {
   })
 }
 
-export const useActivitiesMutation = () => {
+export const useCurrentActivityQuery = () => {
+  const pb = usePocketBase();
+
+  const getActivity = async () => {
+    return await pb.collection('activities').getFirstListItem<Activity>("ended_at=null")
+  }
+  return useQuery({
+    queryKey: ['currentActivity'],
+    queryFn: getActivity,
+    enabled: false
+  })
+}
+
+export const useActivitiesCreateMutation = () => {
   const pb = usePocketBase();
 
   return useMutation({
     mutationFn: async (activityData: Partial<Activity>) => {
-      return await pb.collection('activities').create(activityData);
+      return await pb.collection('activities').create<Activity>(activityData);
+    },
+  });
+}
+
+export const useActivitiesUpdateMutation = () => {
+  const pb = usePocketBase();
+
+  return useMutation({
+    mutationFn: async (activityData: Partial<Activity>) => {
+      const id = activityData.id!;
+      return await pb.collection('activities').update<Activity>(id, activityData);
     },
   });
 }
