@@ -24,7 +24,7 @@ const { data: activities } = useActivitiesQuery(1)
   <div class="w-full max-w-lg mx-auto">
     <TheHeader />
     <main>
-      <TheCurrentActivityPanel />
+      <TheCurrentActivityPanel class="mb-3"/>
       <ActivitiesHistory v-if="activities" :activities="activities.items" />
     </main>
   </div>
