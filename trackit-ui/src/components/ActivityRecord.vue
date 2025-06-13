@@ -62,8 +62,11 @@ const onActivityTimeChange = async (value: boolean) => {
 
     <Popover @update:open="onActivityTimeChange">
       <PopoverTrigger>
-        <span v-if="data.ended_at" class="text-neutral-500 cursor-pointer">
+        <span v-if="data.ended_at && durationFormatted" class="text-neutral-500 cursor-pointer">
           {{ durationFormatted }}
+        </span>
+        <span v-else-if="!durationFormatted" class="text-neutral-500 cursor-pointer italic">
+          Ошибка
         </span>
       </PopoverTrigger>
       <PopoverContent> <ActivityTimeForm v-model:data="activityTime"/> </PopoverContent>
